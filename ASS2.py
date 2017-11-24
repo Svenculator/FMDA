@@ -76,34 +76,4 @@ with open('UNFCCC_v20.csv', 'r') as GHG_EU:
 print(list_CC[0:100])        
 
 
-#%%
-
-list_CC=[]
-list_CN=[]
-list_FN=[]
-list_PN=[]
-list_Y=[]
-list_SN=[]
-list_PSC=[]
-list_SC=[]
-list_N=[]
-list_U=[]
-list_E=[]
-list_DS=[]
-list_PD=[]
-for line in GHG_EU:
-    CC, CN, FN, PN, Y, SN, PSC, SC, N, U, E, DS, PD = line.split('\t')
-    list_CC.append(CC)
-    list_CC.append(CN)
-    list_CC.append(FN)
-    list_CC.append(PN)
-    list_CC.append(Y)
-    list_CC.append(SN)
-    list_CC.append(PSC)
-    list_CC.append(SC)
-    list_CC.append(N)
-    list_CC.append(U)
-    list_CC.append(E)
-    list_CC.append(DS)
-    list_CC.append(PD)
-    
+  
