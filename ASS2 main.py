@@ -18,4 +18,7 @@ print('Working directory is:', os.getcwd())
 #%%
 #zoeken naar 0 om te weten of er geen data mist en uitleggen waarom de data mist. Bijv fishiries in een land waar geen water is.
 
-slovenia = fn.GHGcountry('SI')
+SI = fn.GHGcountry('SI')
+
+
+
