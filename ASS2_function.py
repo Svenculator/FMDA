@@ -107,10 +107,18 @@ def GHGcountry(countrycode):
                 
                         
             for x in range (len(main_data['countrycode'])):
-                if main_data['countrycode'][x] == countrycode:
+                if main_data['countrycode'][x] == 'SI':
                     if main_data['sectorcode'][x] not in list_parentseccode:
-                        float(datacountry.append(main_data['emissions'][x]))
+                        datacountry.append(float(main_data['emissions'][x]))
             return datacountry
     except:
         print('Only enter countrycodes which exist in the database as strings')
 
+
+#%%
+def filterzero(file): #function to filer out all the zeroes of the data
+    list_nozero=[]
+    for line in file:
+        if line >0:
+            list_nozero.append(line)
+    return list_nozero
