@@ -66,48 +66,51 @@ def GHG(countrycode, year, pollutant, sectorcode): #With this function you can c
 #%% Nu alles van een heel land
 
 def GHGcountry(countrycode):
-    with open('UNFCCC_v20.csv', 'r') as GHG_EU:
-        readGHG = csv.reader(GHG_EU, delimiter = '\t')
-        header=next(readGHG, None) #Skip header
-        countriesdata=dict()
-        sectorsdata=dict()
-        main_data= dict()
-        list_parentseccode=[]
-        datacountry=[]
-        main_data={'countrycode': [], 
-                   'formatname' : [], 
-                   'polname': [], 
-                   'year' : [],
-                   'sectorname': [],
-                   'parentsectorcode': [],
-                   'sectorcode': [],
-                   'notation' : [],
-                   'unit': [],
-                   'emissions': [],
-                   'datasource' : [],
-                   'publicationdate' :[]}  
-        for row in readGHG:
-            countryc= str(row[0])
-            countriesdata[countryc]= row[1]
-            sector = str(row[7])
-            sectorsdata[sector]=row[5], row[6]
-            
-            #make list of parent sectors only once
-            if row[6] not in list_parentseccode:
-                list_parentseccode.append(row[6])
-            
-            main_data['countrycode'].append(row[0])
-            main_data['polname'].append(row[3])
-            main_data['year'].append(row[4])
-            main_data['unit'].append(row[9])
-            main_data['emissions'].append(row[10])
-            main_data['sectorcode'].append(row[7])
-            main_data['parentsectorcode'].append(row[6])
-            
-                    
-        for x in range (len(main_data['countrycode'])):
-            if main_data['countrycode'][x] == countrycode:
-                if main_data['sectorcode'][x] not in list_parentseccode:
-                    datacountry.append(main_data['emissions'][x])
-        return datacountry
+    try:
+        with open('UNFCCC_v20.csv', 'r') as GHG_EU:
+            readGHG = csv.reader(GHG_EU, delimiter = '\t')
+            header=next(readGHG, None) #Skip header
+            countriesdata=dict()
+            sectorsdata=dict()
+            main_data= dict()
+            list_parentseccode=[]
+            datacountry=[]
+            main_data={'countrycode': [], 
+                       'formatname' : [], 
+                       'polname': [], 
+                       'year' : [],
+                       'sectorname': [],
+                       'parentsectorcode': [],
+                       'sectorcode': [],
+                       'notation' : [],
+                       'unit': [],
+                       'emissions': [],
+                       'datasource' : [],
+                       'publicationdate' :[]}  
+            for row in readGHG:
+                countryc= str(row[0])
+                countriesdata[countryc]= row[1]
+                sector = str(row[7])
+                sectorsdata[sector]=row[5], row[6]
+                
+                #make list of parent sectors only once
+                if row[6] not in list_parentseccode:
+                    list_parentseccode.append(row[6])
+                
+                main_data['countrycode'].append(row[0])
+                main_data['polname'].append(row[3])
+                main_data['year'].append(row[4])
+                main_data['unit'].append(row[9])
+                main_data['emissions'].append(row[10])
+                main_data['sectorcode'].append(row[7])
+                main_data['parentsectorcode'].append(row[6])
+                
+                        
+            for x in range (len(main_data['countrycode'])):
+                if main_data['countrycode'][x] == countrycode:
+                    if main_data['sectorcode'][x] not in list_parentseccode:
+                        float(datacountry.append(main_data['emissions'][x]))
+            return datacountry
+    except:
+        print('Only enter countrycodes which exist in the database as strings')
 

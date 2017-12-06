@@ -7,7 +7,7 @@ This is where the magic happens
 """
 #%%
 import os
-import ASS2 as fn
+import ASS2_function as fn
 
 
 #%% Set the working directory to what you want it to be
@@ -20,5 +20,4 @@ print('Working directory is:', os.getcwd())
 
 SI = fn.GHGcountry('SI')
 
-
-
+#%%
