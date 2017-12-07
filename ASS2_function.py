@@ -109,12 +109,89 @@ def GHGcountry(countrycode):
                 
                         
             for x in range (len(main_data['countrycode'])):
-                if main_data['countrycode'][x] == 'SI':
+                if main_data['countrycode'][x] == countrycode:
                     if main_data['sectorcode'][x] not in list_parentseccode:
                         datacountry.append(float(main_data['emissions'][x]))
             return datacountry
     except:
         print('Only enter countrycodes which exist in the database as strings')
+        
+#%%SANITY Check --> eerst tellen hoeveel nullen in het bestand
+#--> dan sectorname aan deze nullen toewijzen --> misschien doet land niets in sector
+
+#def missing_data(country):
+with open('UNFCCC_v20.csv', 'r') as GHG_EU:
+        readGHG = csv.reader(GHG_EU, delimiter = '\t')
+        header=next(readGHG, None) #Skip header
+        countriesdata=dict()
+        sectorsdata=dict()
+        main_data= dict()
+        list_parentseccode=[]
+        main_data={'countrycode': [], 
+                   'formatname' : [], 
+                   'polname': [], 
+                   'year' : [],
+                   'sectorname': [],
+                   'parentsectorcode': [],
+                   'sectorcode': [],
+                   'notation' : [],
+                   'unit': [],
+                   'emissions': [],
+                   'datasource' : [],
+                   'publicationdate' :[]}  
+        for row in readGHG:
+            countryc= str(row[0])
+            countriesdata[countryc]= row[1]
+            sector = str(row[7])
+            sectorsdata[sector]=row[5], row[6]
+            
+            #make list of parent sectors only once
+            if row[6] not in list_parentseccode:
+                list_parentseccode.append(row[6])
+            
+            main_data['countrycode'].append(row[0])
+            main_data['polname'].append(row[3])
+            main_data['year'].append(row[4])
+            main_data['sectorname'].append(row[5])
+            main_data['unit'].append(row[9])
+            main_data['emissions'].append(row[10])
+            main_data['sectorcode'].append(row[7])
+            main_data['parentsectorcode'].append(row[6])
+            
+        nodata_sec=dict()
+        
+        for data in range (len(main_data['countrycode'])):
+            if main_data['countrycode'][data] == 'SI':
+                if float(main_data['emissions'][data]) == 0:
+                    sec = main_data['sectorcode'][data]
+                    
+        
+
+
+                    
+                
+            
+            
+            
+            
+            
+    
+#        count_mis = 0
+#        count_hit = 0
+#        sector_mis = []
+#        sector_hit = []
+#        for data in range(len(main_data['emissions'])):
+#            if (main_data['countrycode'][data]== country) or (main_data['country'][data]== country):
+#                if float(main_data['emissions'][data]) == 0:
+#                    count_mis = count_mis + 1
+#                    sector_mis.append(main_data['sectorname'][data])
+#                else:
+#                    count_hit = count_hit + 1
+#                    sector_hit.append(main_data['sectorname'][data])
+#                
+#    return sector_mis, count_mis, sector_hit,count_hit
+            
+
 
 #%%
 def filterzero(file): #function to filter out all the zeroes of the data, so where no data is available
